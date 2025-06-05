@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coincidence?</title>
+  <style>
+    body {
+      margin: 0;
+      background: black url('creepy.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('scanlines.gif') repeat;
+      pointer-events: none;
+      opacity: 0.15;
+      z-index: 1;
+    }
+
+    .text {
+      color: red;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      text-align: center;
+      animation: flicker 2s infinite;
+      z-index: 2;
+    }
+
+    .line {
+      display: none;
+    }
+
+    .line.show {
+      display: block;
+    }
+
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.1; }
+    }
+
+    .flash {
+      animation: redFlash 0.3s ease-in-out;
+    }
+
+    @keyframes redFlash {
+      0% { background-color: rgba(255, 0, 0, 0.3); }
+      100% { background-color: transparent; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="text" id="text-container">
+    <div class="line show" id="line1">Missing dogs. Missing men. Coincidence?</div>
+    <div class="line" id="line2">Chó mất tích. Người mất tích. Trùng hợp?</div>
+  </div>
+
+  <audio id="howl" preload="auto" loop autoplay>
+    <source src="howl.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Toggle flickering text lines
+    setInterval(() => {
+      const l1 = document.getElementById('line1');
+      const l2 = document.getElementById('line2');
+      l1.classList.toggle('show');
+      l2.classList.toggle('show');
+    }, 4000);
+
+    // Audio safety (in case autoplay fails)
+    window.addEventListener('click', () => {
+      const audio = document.getElementById('howl');
+      if (audio.paused) {
+        audio.play().catch(e => console.log("Autoplay blocked:", e));
+      }
+    });
+
+    // Red flash glitch effect
+    setInterval(() => {
+      document.body.classList.add('flash');
+      setTimeout(() => {
+        document.body.classList.remove('flash');
+      }, 100);
+    }, Math.random() * 4000 + 1000);
+  </script>
+</body>
+</html>
