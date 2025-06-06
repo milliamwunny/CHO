@@ -1,0 +1,28 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # every day at noon UTC
+  workflow_dispatch:
+
+jobs:
+  autocommit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}  # Use your personal token here
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Make a dummy commit
+        run: |
+          echo "Ping: $(date)" > timestamp.txt
+          git add timestamp.txt
+          git commit -m "🤖 daily ping" || echo "nothing to commit"
+          git push
