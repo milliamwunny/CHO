@@ -10,14 +10,21 @@ on:
 jobs:
   autocommit:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
       - name: Make a dummy commit
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          date > timestamp.txt
-          git add .
+          echo "Ping: $(date)" > timestamp.txt
+          git add timestamp.txt
           git commit -m "🤖 daily ping" || echo "nothing to commit"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
