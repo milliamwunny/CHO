@@ -5,7 +5,7 @@ name: Auto Commit
 on:
   schedule:
     - cron: '0 12 * * *'  # every day at noon UTC
-  workflow_dispatch:
+  workflow_dispatch:       # allows manual trigger
 
 jobs:
   autocommit:
@@ -25,6 +25,7 @@ jobs:
           echo "Ping: $(date)" > timestamp.txt
           git add timestamp.txt
           git commit -m "🤖 daily ping" || echo "nothing to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAT: ${{ secrets.PAT }}
