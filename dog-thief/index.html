@@ -10,15 +10,13 @@
           async src="https://gc.zgo.at/count.js"></script>
 
   <style>
-        body {
+    body {
       margin: 0;
       background: black url('creepy.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Courier New', monospace;
       overflow: hidden;
-
-      /* Better cursor support with fallback and hotspot coords */
-      cursor: url('blood-cursor.cur') 16 16, auto;
+      cursor: url('https://cdn.jsdelivr.net/gh/elguapo-ai/cursors@main/blood-cursor.cur'), auto;
     }
 
     .overlay {
@@ -73,7 +71,6 @@
       100% { background-color: transparent; }
     }
 
-    /* Cusdis comment box styling */
     :root {
       --cusdis-color-text: red;
       --cusdis-color-placeholder: #888;
@@ -82,7 +79,7 @@
     }
 
     iframe {
-      filter: invert(1) hue-rotate(180deg); /* Fallback for styling iframe */
+      filter: invert(1) hue-rotate(180deg);
     }
 
     .cusdis-thread {
@@ -163,4 +160,3 @@
   </script>
 </body>
 </html>
-```
