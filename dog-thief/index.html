@@ -6,10 +6,8 @@
   <title>Coincidence?</title>
 
   <!-- GoatCounter Tracking -->
-  <script data-goatcounter="https://dogthiefstats.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-
-  <!-- Cusdis Comments Embed -->
-  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+  <script data-goatcounter="https://dogthiefstats.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
 
   <style>
     body {
@@ -18,7 +16,7 @@
       background-size: cover;
       font-family: 'Courier New', monospace;
       overflow: hidden;
-      cursor: url('bloody-cursor.png'), auto;
+      cursor: url('blood-cursor.png'), auto;
     }
 
     .overlay {
@@ -43,6 +41,12 @@
       text-align: center;
       animation: flicker 2s infinite;
       z-index: 2;
+      opacity: 0;
+      animation: fadeIn 4s forwards, flicker 2s infinite;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     .line {
@@ -67,39 +71,30 @@
       100% { background-color: transparent; }
     }
 
-    #cusdis_thread {
-      max-width: 100%;
-      margin: 0 auto;
+    /* Cusdis comment box styling */
+    :root {
+      --cusdis-color-text: red;
+      --cusdis-color-placeholder: #888;
+      --cusdis-color-background: #111;
+      --cusdis-color-border: #444;
+    }
+
+    iframe {
+      filter: invert(1) hue-rotate(180deg); /* Fallback for styling iframe */
+    }
+
+    .cusdis-thread {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      z-index: 3;
       padding: 1rem;
-      background: rgba(0, 0, 0, 0.85);
-      color: #eee;
-      z-index: 10;
-      position: relative;
-      animation: fadeIn 3s ease-in-out forwards;
-      opacity: 0;
     }
 
-    #cusdis_thread input,
-    #cusdis_thread textarea {
-      background-color: #111 !important;
-      color: #eee !important;
-      border: 1px solid #444;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    @media (max-width: 768px) {
-      #cusdis_thread {
-        margin-top: 60vh;
-        padding-bottom: 2rem;
-      }
-    }
-
-    @media (min-width: 769px) {
-      #cusdis_thread {
-        margin-top: 75vh;
+    @media (max-width: 600px) {
+      .text {
+        font-size: 1.2rem;
+        top: 45%;
       }
     }
   </style>
@@ -112,30 +107,33 @@
     <div class="line" id="line2">"Chó mất tích. Người cũng mất tích. Có phải trùng hợp?</div>
   </div>
 
+  <!-- Howling -->
   <audio id="howl" preload="auto" loop autoplay>
     <source src="howl.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Dog Attack Ambience -->
-  <audio id="attack" preload="auto" loop>
-    <source src="ripping-growls.mp3" type="audio/mpeg">
+  <!-- Dog mauling sound -->
+  <audio id="dogs" preload="auto" loop autoplay>
+    <source src="dogs.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Whisper Layer -->
-  <audio id="whispers" preload="auto" loop>
+  <!-- Creepy whisper ambience -->
+  <audio id="whispers" preload="auto" loop autoplay>
     <source src="whispers.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Cusdis Comment Box -->
+  <!-- Cusdis Comments -->
   <div id="cusdis_thread"
-       data-host="https://cusdis.com"
-       data-app-id="783a50c6-2ade-44ca-b4c0-12a22805097a"
-       data-page-id="dog-thief"
-       data-page-url="https://milliamwunny.github.io/CHO/dog-thief/"
-       data-page-title="Dog Thief - Coincidence?">
+    data-host="https://cusdis.com"
+    data-app-id="783a50c6-2ade-44ca-b4c0-12a22805097a"
+    data-page-id="https://milliamwunny.github.io/CHO/dog-thief/"
+    data-page-url="https://milliamwunny.github.io/CHO/dog-thief/"
+    data-page-title="Coincidence?">
   </div>
+  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 
   <script>
+    // Toggle flickering text lines
     setInterval(() => {
       const l1 = document.getElementById('line1');
       const l2 = document.getElementById('line2');
@@ -143,16 +141,17 @@
       l2.classList.toggle('show');
     }, 4000);
 
+    // Audio autoplay fallback
     window.addEventListener('click', () => {
-      const howl = document.getElementById('howl');
-      const whispers = document.getElementById('whispers');
-      const attack = document.getElementById('attack');
-
-      if (howl.paused) howl.play();
-      if (whispers.paused) whispers.volume = 0.2; whispers.play();
-      if (attack.paused) attack.volume = 0.3; attack.play();
+      ['howl', 'dogs', 'whispers'].forEach(id => {
+        const audio = document.getElementById(id);
+        if (audio && audio.paused) {
+          audio.play().catch(e => console.log(id + " autoplay blocked:", e));
+        }
+      });
     });
 
+    // Red flash glitch effect
     setInterval(() => {
       document.body.classList.add('flash');
       setTimeout(() => {
