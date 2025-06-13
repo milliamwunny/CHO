@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coincidence?</title>
 
- <!-- GoatCounter Tracking -->
-<script data-goatcounter="https://dogthiefstats.goatcounter.com/count"
-        async src="https://gc.zgo.at/count.js"></script>
+  <!-- GoatCounter Tracking -->
+  <script data-goatcounter="https://dogthiefstats.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
 
   <style>
     body {
@@ -64,14 +64,31 @@
       100% { background-color: transparent; }
     }
 
-    /* CommentBox styling fallback */
-    .commentbox {
-      background: #111;
-      color: #eee;
+    /* 🧛 Cusdis styling */
+    #cusdis_thread {
+      max-width: 90%;
+      margin: 60vh auto 50px;
+      background: rgba(0, 0, 0, 0.85);
       padding: 1rem;
-      margin-top: 80vh;
-      z-index: 10;
-      position: relative;
+      border: 1px solid red;
+      border-radius: 8px;
+      color: red;
+      font-family: 'Courier New', monospace;
+      z-index: 3;
+      opacity: 0;
+      animation: fadeInCreep 3s ease-in-out forwards;
+      animation-delay: 4s;
+    }
+
+    @keyframes fadeInCreep {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      #cusdis_thread {
+        margin-top: 30vh;
+      }
     }
   </style>
 </head>
@@ -87,12 +104,15 @@
     <source src="howl.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- CommentBox.io -->
-  <div class="commentbox"></div>
-  <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
-  <script>
-    commentBox('5633730135719936-proj'); // Replace with actual CommentBox.io ID
-  </script>
+  <!-- 💬 Cusdis Comment Wall -->
+  <div id="cusdis_thread"
+    data-host="https://cusdis.com"
+    data-app-id="783a50c6-2ade-44ca-b4c0-12a22805097a"
+    data-page-id="homepage"
+    data-page-url="https://milliamwunny.github.io/CHO/"
+    data-page-title="Coincidence?"
+  ></div>
+  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 
   <script>
     // Toggle flickering text lines
