@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coincidence?</title>
+
+  <!-- GoatCounter Tracking -->
+  <script data-goatcounter="https://dogthiefstats.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -58,6 +63,16 @@
       0% { background-color: rgba(255, 0, 0, 0.3); }
       100% { background-color: transparent; }
     }
+
+    /* CommentBox styling fallback */
+    .commentbox {
+      background: #111;
+      color: #eee;
+      padding: 1rem;
+      margin-top: 80vh;
+      z-index: 10;
+      position: relative;
+    }
   </style>
 </head>
 <body>
@@ -72,6 +87,13 @@
     <source src="howl.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- CommentBox.io -->
+  <div class="commentbox"></div>
+  <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+  <script>
+    commentBox('5633730135719936-proj'); // Replace with actual CommentBox.io ID
+  </script>
+
   <script>
     // Toggle flickering text lines
     setInterval(() => {
@@ -81,7 +103,7 @@
       l2.classList.toggle('show');
     }, 4000);
 
-    // Audio safety (in case autoplay fails)
+    // Audio autoplay fallback
     window.addEventListener('click', () => {
       const audio = document.getElementById('howl');
       if (audio.paused) {
