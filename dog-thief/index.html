@@ -1,6 +1,3 @@
-i cant find the cursor part in the html code, can you add it?
-
-```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,13 +10,15 @@ i cant find the cursor part in the html code, can you add it?
           async src="https://gc.zgo.at/count.js"></script>
 
   <style>
-    body {
+        body {
       margin: 0;
       background: black url('creepy.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Courier New', monospace;
       overflow: hidden;
-      cursor: url('blood-cursor.png'), auto;
+
+      /* Better cursor support with fallback and hotspot coords */
+      cursor: url('blood-cursor.png') 16 16, auto;
     }
 
     .overlay {
