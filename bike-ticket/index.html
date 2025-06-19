@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>THÔNG BÁO VI PHẠM</title>
   <style>
@@ -10,8 +10,8 @@
       padding: 0;
       background: black;
       overflow: hidden;
+      cursor: crosshair;
     }
-
     #nightmareShow {
       position: absolute;
       width: 100vw;
@@ -19,7 +19,6 @@
       object-fit: contain;
       z-index: 1;
     }
-
     .appeal {
       position: absolute;
       bottom: 5%;
@@ -27,7 +26,6 @@
       text-align: center;
       z-index: 10;
     }
-
     .appeal a {
       color: white;
       font-size: 1.5rem;
@@ -37,12 +35,10 @@
       text-decoration: none;
       transition: 0.3s;
     }
-
     .appeal a:hover {
       background: white;
       color: red;
     }
-
     .insult {
       position: absolute;
       color: red;
@@ -52,7 +48,6 @@
       animation: pop 0.3s ease-out;
       z-index: 5;
     }
-
     @keyframes pop {
       0% { transform: scale(0); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
@@ -60,15 +55,15 @@
   </style>
 </head>
 <body>
-  <img id="nightmareShow" src="diarrhea-mspaint.png" alt="Violation Visual" />
+  <img id="nightmareShow" src="diarrhea-mspaint.png" alt="Violation Visual">
 
   <div class="appeal">
     <a href="appeal.html">Khiếu nại vi phạm</a>
   </div>
 
-  <audio autoplay loop><source src="fart1.mp3" type="audio/mpeg"></audio>
-  <audio autoplay loop><source src="fart2.mp3" type="audio/mpeg"></audio>
-  <audio autoplay loop><source src="fart3.mp3" type="audio/mpeg"></audio>
+  <audio id="fart1" loop><source src="fart1.mp3" type="audio/mpeg"></audio>
+  <audio id="fart2" loop><source src="fart2.mp3" type="audio/mpeg"></audio>
+  <audio id="fart3" loop><source src="fart3.mp3" type="audio/mpeg"></audio>
 
   <script>
     const img = document.getElementById('nightmareShow');
@@ -80,20 +75,18 @@
       'usa-creep.jpg'
     ];
     let i = 0;
-
     setInterval(() => {
       i = (i + 1) % frames.length;
       img.src = frames[i];
     }, 1000);
 
     const insults = [
-      "XE MÀY NHƯ CẦ̂C!",
+      "XE MÀY NHƯ CỨT!",
       "KHÔNG AI DẠY MÀY ĐỖ XE À?",
-      "MÀY MUỐN CHết HÀ?",
-      "NGƯỐI MÀY NHÌN NHƯ BUỒN NGẬM",
-      "BỐ MÀY Đây!"
+      "MÀY MUỐN CHẾT HẢ?",
+      "NGƯỜI MÀY NHÌN NHƯ BUỒN NÔN",
+      "BỐ MÀY ĐÂY!"
     ];
-
     function randomPos() {
       return {
         x: Math.random() * window.innerWidth,
@@ -101,7 +94,6 @@
         size: 20 + Math.random() * 60
       };
     }
-
     function dropInsult() {
       const el = document.createElement('div');
       el.classList.add('insult');
@@ -113,8 +105,13 @@
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 1500);
     }
-
     setInterval(dropInsult, 400);
+
+    window.addEventListener('click', () => {
+      document.getElementById('fart1').play();
+      document.getElementById('fart2').play();
+      document.getElementById('fart3').play();
+    });
   </script>
 </body>
 </html>

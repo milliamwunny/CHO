@@ -1,34 +1,87 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Khiếu nại? LOL</title>
+  <title>KHÁNG CÁO THẤT BẠI</title>
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
       background-color: black;
       overflow: hidden;
+      font-family: Impact, sans-serif;
     }
-
-    #troiOi {
+    #gifContainer {
       width: 100vw;
       height: 100vh;
-      object-fit: contain;
-      position: absolute;
-      top: 0; left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 1;
     }
-
+    #gifContainer img {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
     .insult {
       position: absolute;
-      color: red;
+      color: yellow;
+      text-shadow: 2px 2px 4px red;
+      animation: kaboom 0.3s ease-out;
       font-weight: bold;
-      font-family: Impact, sans-serif;
-      text-shadow: 2px 2px black;
-      animation: pop 0.3s ease-out;
-      z-index: 2;
+      z-index: 10;
+    }
+    @keyframes kaboom {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="gifContainer">
+    <img src="troi-oi.gif" alt="Trời ơi!">
+  </div>
+
+  <audio id="yellAudio">
+    <source src="vietnamese-mad.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const insults = [
+      "XE MÀY MÀY NHÌN NHƯ CỨT!",
+      "KHÁNG CÁO? MƯỢN MÔNG MÀY VÔ!",
+      "BỐ MÀY ĐÂY!!!",
+      "NGƯỜI MÀY LÀM TA TỨC NGỰC",
+      "MƯỜNG CHÓ HỦY LỐI XE MÀY!"
+    ];
+
+    function randomPos() {
+      return {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: 24 + Math.random() * 80
+      };
     }
 
-    @keyframes pop {
-      0% { trans
+    function fireInsult() {
+      const el = document.createElement('div');
+      el.classList.add('insult');
+      const { x, y, size } = randomPos();
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.style.fontSize = `${size}px`;
+      el.textContent = insults[Math.floor(Math.random() * insults.length)];
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2000);
+    }
+
+    setInterval(fireInsult, 500);
+
+    window.addEventListener('click', () => {
+      const audio = document.getElementById('yellAudio');
+      audio.play();
+    });
+  </script>
+</body>
+</html>
