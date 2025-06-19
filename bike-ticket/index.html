@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thông Báo Vi Phạm</title>
+  <title>THÔNG BÁO VI PHẠM</title>
   <style>
     html, body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: black;
       overflow: hidden;
     }
 
-    #grossShow {
+    #nightmareShow {
       position: absolute;
       width: 100vw;
       height: 100vh;
-      object-fit: cover;
+      object-fit: contain;
+      z-index: 1;
     }
 
     .appeal {
@@ -29,7 +31,7 @@
     .appeal a {
       color: white;
       font-size: 1.5rem;
-      background: rgba(255,0,0,0.8);
+      background: rgba(255, 0, 0, 0.8);
       padding: 10px 20px;
       border-radius: 5px;
       text-decoration: none;
@@ -40,38 +42,79 @@
       background: white;
       color: red;
     }
+
+    .insult {
+      position: absolute;
+      color: red;
+      font-weight: bold;
+      font-family: Impact, sans-serif;
+      text-shadow: 2px 2px black;
+      animation: pop 0.3s ease-out;
+      z-index: 5;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <img id="grossShow" src="gape.jpg" alt="Gape punishment" />
-  
+  <img id="nightmareShow" src="diarrhea-mspaint.png" alt="Violation Visual" />
+
   <div class="appeal">
     <a href="appeal.html">Khiếu nại vi phạm</a>
   </div>
 
-  <!-- Triple Sound of Doom -->
-  <audio autoplay loop>
-    <source src="fart1.mp3" type="audio/mpeg">
-  </audio>
+  <audio autoplay loop><source src="fart1.mp3" type="audio/mpeg"></audio>
+  <audio autoplay loop><source src="fart2.mp3" type="audio/mpeg"></audio>
+  <audio autoplay loop><source src="fart3.mp3" type="audio/mpeg"></audio>
 
-  <audio autoplay loop>
-    <source src="fart2.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio autoplay loop>
-    <source src="fart3.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Flash between gape and poop -->
   <script>
-    const img = document.getElementById('grossShow');
-    const imgs = ['gape.jpg', 'poop.gif'];
+    const img = document.getElementById('nightmareShow');
+    const frames = [
+      'diarrhea-mspaint.png',
+      'poopokemon.png',
+      'goatseniverse.jpg',
+      'harry-dumber.jpg',
+      'usa-creep.jpg'
+    ];
     let i = 0;
 
     setInterval(() => {
-      i = (i + 1) % imgs.length;
-      img.src = imgs[i];
-    }, 800); // switch every 800ms
+      i = (i + 1) % frames.length;
+      img.src = frames[i];
+    }, 1000);
+
+    const insults = [
+      "XE MÀY NHƯ CẦ̂C!",
+      "KHÔNG AI DẠY MÀY ĐỖ XE À?",
+      "MÀY MUỐN CHết HÀ?",
+      "NGƯỐI MÀY NHÌN NHƯ BUỒN NGẬM",
+      "BỐ MÀY Đây!"
+    ];
+
+    function randomPos() {
+      return {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: 20 + Math.random() * 60
+      };
+    }
+
+    function dropInsult() {
+      const el = document.createElement('div');
+      el.classList.add('insult');
+      const { x, y, size } = randomPos();
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.style.fontSize = `${size}px`;
+      el.textContent = insults[Math.floor(Math.random() * insults.length)];
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1500);
+    }
+
+    setInterval(dropInsult, 400);
   </script>
 </body>
 </html>
