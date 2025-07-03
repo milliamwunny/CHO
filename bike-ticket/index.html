@@ -1,73 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>⚠️ Vi Phạm Đỗ Xe</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google" content="notranslate" />
+  <title>THÔNG BÁO VI PHẠM</title>
   <style>
-    body {
-      background-color: black;
-      color: red;
-      font-family: 'Courier New', monospace;
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      cursor: crosshair;
+    }
+    #nightmareShow {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      z-index: 1;
+    }
+    .appeal {
+      position: absolute;
+      bottom: 5%;
+      width: 100%;
       text-align: center;
-      padding: 20px;
+      z-index: 10;
     }
-
-    h1 {
-      font-size: 2em;
-      animation: flicker 1s infinite;
-    }
-
-    @keyframes flicker {
-      0% { opacity: 1; }
-      50% { opacity: 0.3; }
-      100% { opacity: 1; }
-    }
-
-    .fake-comment {
-      max-width: 600px;
-      margin: 10px auto;
-      background-color: #1a1a1a;
-      padding: 8px 12px;
-      border-left: 4px solid red;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    .commentbox {
-      max-width: 600px;
-      margin: 50px auto;
-      background-color: #111;
-      padding: 10px;
+    .appeal a {
+      color: white;
+      font-size: 1.5rem;
+      background: rgba(255, 0, 0, 0.8);
+      padding: 10px 20px;
       border-radius: 5px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .appeal a:hover {
+      background: white;
+      color: red;
+    }
+    .insult {
+      position: absolute;
+      color: red;
+      font-weight: bold;
+      font-family: Impact, sans-serif;
+      text-shadow: 2px 2px black;
+      animation: pop 0.3s ease-out;
+      z-index: 5;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
-
 <body>
-  <h1>⚠️ Lỗi Đỗ Xe</h1>
-  <p>Bạn đỗ xe như một con bò. <br>Quét mã và kiểm điểm bản thân.</p>
+  <img id="nightmareShow" src="diarrhea-mspaint.png" alt="Violation Visual" />
 
-  <audio autoplay loop>
-    <source src="fart3.mp3" type="audio/mpeg">
-  </audio>
+  <div class="appeal">
+    <a href="appeal.html">Khiếu nại vi phạm</a>
+  </div>
 
-  <!-- Fake Comments Section -->
-  <div class="fake-comment"><strong>Anonymous:</strong> Bro I scanned this at lunch and almost threw up 😭</div>
-  <div class="fake-comment"><strong>MeoMeo97:</strong> Đù má cái này là gì vậy??? Ai làm tao sợ quá!</div>
-  <div class="fake-comment"><strong>XeTăng_69:</strong> This ain’t funny. I was on a date, man 😡</div>
-  <div class="fake-comment"><strong>Nguyễn Văn Quét:</strong> Cười ỉa... tôi bị dính cái này ngoài Circle K.</div>
-  <div class="fake-comment"><strong>RichKid404:</strong> Got this after double-parking my Lexus. Touché.</div>
+  <audio id="fart1" loop><source src="fart1.mp3" type="audio/mpeg" /></audio>
+  <audio id="fart2" loop><source src="fart2.mp3" type="audio/mpeg" /></audio>
+  <audio id="fart3" loop><source src="fart3.mp3" type="audio/mpeg" /></audio>
 
-  <!-- Real CommentBox Section -->
-  <div class="commentbox"></div>
-  <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
   <script>
-    commentBox('5664120787435520-proj')
-  </script>
+    const img = document.getElementById('nightmareShow');
+    const frames = [
+      'diarrhea-mspaint.png',
+      'poopokemon.png',
+      'goatseniverse.jpg',
+      'harry-dumber.jpg',
+      'usa-creep.jpg'
+    ];
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % frames.length;
+      img.src = frames[i];
+    }, 1000);
 
-  <!-- GoatCounter (optional) -->
-  <script data-goatcounter="https://yourid.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+    const insults = [
+      "XE MÀY NHƯ CỨT!",
+      "KHÔNG AI DẠY MÀY ĐỖ XE À?",
+      "MÀY MUỐN CHẾT HẢ?",
+      "NGƯỜI MÀY NHÌN NHƯ BUỒN NÔN",
+      "BỐ MÀY ĐÂY!"
+    ];
+    function randomPos() {
+      return {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: 20 + Math.random() * 60
+      };
+    }
+    function dropInsult() {
+      const el = document.createElement('div');
+      el.classList.add('insult');
+      const { x, y, size } = randomPos();
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.style.fontSize = `${size}px`;
+      el.textContent = insults[Math.floor(Math.random() * insults.length)];
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1500);
+    }
+    setInterval(dropInsult, 400);
+
+    window.addEventListener('click', () => {
+      document.getElementById('fart1').play();
+      document.getElementById('fart2').play();
+      document.getElementById('fart3').play();
+    });
+  </script>
+  <!-- Fake Comments Section -->
+<div class="fake-comment"><strong>Anonymous:</strong> Bro I scanned this at lunch and almost threw up 😭</div>
+<div class="fake-comment"><strong>MeoMeo97:</strong> Đù má cái này là gì vậy??? Ai làm tao sợ quá!</div>
+<div class="fake-comment"><strong>XeTăng_69:</strong> This ain’t funny. I was on a date, man 😡</div>
+<div class="fake-comment"><strong>Nguyễn Văn Quét:</strong> Cười ỉa... tôi bị dính cái này ngoài Circle K.</div>
+<div class="fake-comment"><strong>RichKid404:</strong> Got this after double-parking my Lexus. Touché.</div>
+
+<!-- Real CommentBox Section -->
+<div class="commentbox"></div>
+<script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+<script>
+  commentBox('5664120787435520-proj')
+</script>
 </body>
 </html>
