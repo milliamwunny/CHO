@@ -10,16 +10,22 @@
       margin: 0;
       padding: 0;
       background: black;
-      overflow: hidden;
       cursor: crosshair;
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: 100%;
+      color: white;
+      font-family: 'Courier New', monospace;
     }
+
     #nightmareShow {
       position: absolute;
       width: 100vw;
       height: 100vh;
       object-fit: contain;
-      z-index: 1;
+      z-index: 0;
     }
+
     .appeal {
       position: absolute;
       bottom: 5%;
@@ -27,6 +33,7 @@
       text-align: center;
       z-index: 10;
     }
+
     .appeal a {
       color: white;
       font-size: 1.5rem;
@@ -36,10 +43,12 @@
       text-decoration: none;
       transition: 0.3s;
     }
+
     .appeal a:hover {
       background: white;
       color: red;
     }
+
     .insult {
       position: absolute;
       color: red;
@@ -49,13 +58,39 @@
       animation: pop 0.3s ease-out;
       z-index: 5;
     }
+
     @keyframes pop {
       0% { transform: scale(0); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
+
+    .fake-comment {
+      max-width: 600px;
+      margin: 10px auto;
+      background-color: #1a1a1a;
+      padding: 8px 12px;
+      border-left: 4px solid red;
+      text-align: left;
+      font-size: 14px;
+      color: white;
+      z-index: 999;
+      position: relative;
+    }
+
+    .commentbox {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #111;
+      padding: 10px;
+      border-radius: 5px;
+      color: white;
+      z-index: 999;
+      position: relative;
+    }
   </style>
 </head>
 <body>
+
   <img id="nightmareShow" src="diarrhea-mspaint.png" alt="Violation Visual" />
 
   <div class="appeal">
@@ -114,18 +149,21 @@
       document.getElementById('fart3').play();
     });
   </script>
-  <!-- Fake Comments Section -->
-<div class="fake-comment"><strong>Anonymous:</strong> Bro I scanned this at lunch and almost threw up 😭</div>
-<div class="fake-comment"><strong>MeoMeo97:</strong> Đù má cái này là gì vậy??? Ai làm tao sợ quá!</div>
-<div class="fake-comment"><strong>XeTăng_69:</strong> This ain’t funny. I was on a date, man 😡</div>
-<div class="fake-comment"><strong>Nguyễn Văn Quét:</strong> Cười ỉa... tôi bị dính cái này ngoài Circle K.</div>
-<div class="fake-comment"><strong>RichKid404:</strong> Got this after double-parking my Lexus. Touché.</div>
 
-<!-- Real CommentBox Section -->
-<div class="commentbox"></div>
-<script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
-<script>
-  commentBox('5664120787435520-proj')
-</script>
+  <!-- Fake Comments Section -->
+  <div class="fake-comment"><strong>Anonymous:</strong> Bro I scanned this at lunch and almost threw up 😭</div>
+  <div class="fake-comment"><strong>MeoMeo97:</strong> Đù má cái này là gì vậy??? Ai làm tao sợ quá!</div>
+  <div class="fake-comment"><strong>XeTăng_69:</strong> This ain’t funny. I was on a date, man 😡</div>
+  <div class="fake-comment"><strong>Nguyễn Văn Quét:</strong> Cười ỉa... tôi bị dính cái này ngoài Circle K.</div>
+  <div class="fake-comment"><strong>RichKid404:</strong> Got this after double-parking my Lexus. Touché.</div>
+
+  <!-- Real CommentBox Section -->
+  <div class="commentbox"></div>
+  <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+  <script>
+    commentBox('5664120787435520-proj')
+  </script>
+
 </body>
 </html>
+
