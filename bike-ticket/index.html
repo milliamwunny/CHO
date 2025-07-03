@@ -18,12 +18,22 @@
       font-family: 'Courier New', monospace;
     }
 
+    #visualWrapper {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 1;
+    }
+
     #nightmareShow {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       object-fit: contain;
-      z-index: 0;
+      z-index: 1;
     }
 
     .appeal {
@@ -91,16 +101,20 @@
 </head>
 <body>
 
-  <img id="nightmareShow" src="diarrhea-mspaint.png" alt="Violation Visual" />
+  <!-- Wrapper for Visual Chaos -->
+  <div id="visualWrapper">
+    <img id="nightmareShow" src="diarrhea-mspaint.png" alt="Violation Visual" />
 
-  <div class="appeal">
-    <a href="appeal.html">Khiếu nại vi phạm</a>
+    <div class="appeal">
+      <a href="appeal.html">Khiếu nại vi phạm</a>
+    </div>
+
+    <audio id="fart1" loop><source src="fart1.mp3" type="audio/mpeg" /></audio>
+    <audio id="fart2" loop><source src="fart2.mp3" type="audio/mpeg" /></audio>
+    <audio id="fart3" loop><source src="fart3.mp3" type="audio/mpeg" /></audio>
   </div>
 
-  <audio id="fart1" loop><source src="fart1.mp3" type="audio/mpeg" /></audio>
-  <audio id="fart2" loop><source src="fart2.mp3" type="audio/mpeg" /></audio>
-  <audio id="fart3" loop><source src="fart3.mp3" type="audio/mpeg" /></audio>
-
+  <!-- INSULT MACHINE -->
   <script>
     const img = document.getElementById('nightmareShow');
     const frames = [
@@ -161,7 +175,7 @@
   <div class="commentbox"></div>
   <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
   <script>
-    commentBox('5664120787435520-proj')
+    commentBox('5664120787435520-proj');
   </script>
 
 </body>
