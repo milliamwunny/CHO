@@ -33,10 +33,11 @@
       font-weight: bold;
       font-family: Impact, sans-serif;
       text-shadow: 2px 2px black;
-      animation: pop 0.3s ease-out;
+      animation: pop 0.4s ease-out;
       z-index: 5;
       word-wrap: break-word;
-      max-width: 90vw;
+      max-width: 80vw;
+      text-align: center;
     }
 
     @keyframes pop {
@@ -63,11 +64,11 @@
     ];
 
     function randomPos() {
-      const padding = 50; // keep text off edges
+      const padding = 50; 
       return {
         x: padding + Math.random() * (window.innerWidth - padding*2),
         y: padding + Math.random() * (window.innerHeight - padding*2),
-        size: Math.max(18, Math.min(48, window.innerWidth / 20 + Math.random() * 30))
+        size: Math.max(18, Math.min(48, window.innerWidth / 18 + Math.random() * 25))
       };
     }
 
@@ -80,12 +81,12 @@
       el.style.fontSize = `${size}px`;
       el.textContent = insults[Math.floor(Math.random() * insults.length)];
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 2000);
+      setTimeout(() => el.remove(), 3000); // stays longer now
     }
 
-    setInterval(dropInsult, 1000); // Slower for readability
+    // Slower interval for readability on phones
+    setInterval(dropInsult, 1500);
 
-    // Start the fart symphony on click/tap
     window.addEventListener('click', () => {
       document.getElementById('appealAudio').play();
     });
