@@ -38,6 +38,7 @@
       word-wrap: break-word;
       max-width: 80vw;
       text-align: center;
+      white-space: nowrap;
     }
 
     @keyframes pop {
@@ -63,30 +64,33 @@
       "BỐ MÀY NHÌN MÀY MUỐN ÓI!"
     ];
 
-    function randomPos() {
-      const padding = 50; 
-      return {
-        x: padding + Math.random() * (window.innerWidth - padding*2),
-        y: padding + Math.random() * (window.innerHeight - padding*2),
-        size: Math.max(18, Math.min(48, window.innerWidth / 18 + Math.random() * 25))
-      };
-    }
-
     function dropInsult() {
       const el = document.createElement('div');
       el.classList.add('insult');
-      const { x, y, size } = randomPos();
-      el.style.left = `${x}px`;
-      el.style.top = `${y}px`;
-      el.style.fontSize = `${size}px`;
       el.textContent = insults[Math.floor(Math.random() * insults.length)];
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 3000); // stays longer now
+
+      // Pick random font size suitable for mobile
+      const size = Math.max(18, Math.min(48, window.innerWidth / 20 + Math.random() * 20));
+      el.style.fontSize = `${size}px`;
+
+      // Measure element after it's in DOM
+      const rect = el.getBoundingClientRect();
+      const maxX = window.innerWidth - rect.width - 10;
+      const maxY = window.innerHeight - rect.height - 10;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+
+      setTimeout(() => el.remove(), 3500); // visible longer
     }
 
-    // Slower interval for readability on phones
-    setInterval(dropInsult, 1500);
+    // Slower interval for phones
+    setInterval(dropInsult, 2000);
 
+    // Play sound on first tap for mobile
     window.addEventListener('click', () => {
       document.getElementById('appealAudio').play();
     });
