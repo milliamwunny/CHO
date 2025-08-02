@@ -67,6 +67,8 @@
       text-shadow: 2px 2px black;
       animation: pop 0.3s ease-out;
       z-index: 5;
+      word-wrap: break-word;
+      max-width: 90vw;
     }
 
     @keyframes pop {
@@ -101,7 +103,6 @@
 </head>
 <body>
 
-  <!-- Wrapper for Visual Chaos -->
   <div id="visualWrapper">
     <img id="nightmareShow" src="diarrhea-mspaint.png" alt="Violation Visual" />
 
@@ -114,7 +115,6 @@
     <audio id="fart3" loop><source src="fart3.mp3" type="audio/mpeg" /></audio>
   </div>
 
-  <!-- INSULT MACHINE -->
   <script>
     const img = document.getElementById('nightmareShow');
     const frames = [
@@ -137,13 +137,16 @@
       "NGƯỜI MÀY NHÌN NHƯ BUỒN NÔN",
       "BỐ MÀY ĐÂY!"
     ];
+
     function randomPos() {
+      const padding = 50; // keeps text from hitting edges
       return {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: 20 + Math.random() * 60
+        x: padding + Math.random() * (window.innerWidth - padding*2),
+        y: padding + Math.random() * (window.innerHeight - padding*2),
+        size: Math.max(18, Math.min(48, window.innerWidth / 20 + Math.random() * 30))
       };
     }
+
     function dropInsult() {
       const el = document.createElement('div');
       el.classList.add('insult');
@@ -153,9 +156,10 @@
       el.style.fontSize = `${size}px`;
       el.textContent = insults[Math.floor(Math.random() * insults.length)];
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 1500);
+      setTimeout(() => el.remove(), 2000);
     }
-    setInterval(dropInsult, 400);
+
+    setInterval(dropInsult, 1000); // slower for readability
 
     window.addEventListener('click', () => {
       document.getElementById('fart1').play();
@@ -180,4 +184,3 @@
 
 </body>
 </html>
-
