@@ -4,68 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate" />
-  <title>KHÁNG CÁO THẤT BẠI</title>
+  <title>KHÁNG CÁO</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background-color: black;
+      background: black;
       overflow: hidden;
-      font-family: Impact, sans-serif;
+      cursor: crosshair;
+      height: 100%;
+      color: white;
+      font-family: 'Courier New', monospace;
     }
-    #gifContainer {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+
+    #appealGif {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      max-height: 70vh;
       z-index: 1;
     }
-    #gifContainer img {
-      max-width: 90vw;
-      max-height: 90vh;
-    }
+
     .insult {
       position: absolute;
       color: yellow;
-      text-shadow: 2px 2px 4px red;
-      animation: kaboom 0.3s ease-out;
       font-weight: bold;
-      z-index: 10;
+      font-family: Impact, sans-serif;
+      text-shadow: 2px 2px black;
+      animation: pop 0.3s ease-out;
+      z-index: 5;
+      word-wrap: break-word;
+      max-width: 90vw;
     }
-    @keyframes kaboom {
+
+    @keyframes pop {
       0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div id="gifContainer">
-    <img src="troi-oi.gif" alt="Trời ơi!" />
-  </div>
 
-  <audio id="yellAudio" loop>
-    <source src="vietnamese-mad.mp3" type="audio/mpeg" />
+  <img id="appealGif" src="troi-oi.gif" alt="Appeal GIF" />
+
+  <audio id="appealAudio" loop>
+    <source src="appeal-fart.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
     const insults = [
-      "XE MÀY MÀY NHÌN NHƯ CỨT!",
-      "KHÁNG CÁO? MƯỢN MÔNG MÀY VÔ!",
-      "BỐ MÀY ĐÂY!!!",
-      "NGƯỜI MÀY LÀM TA TỨC NGỰC",
-      "MƯỜNG CHÓ HỦY LỐI XE MÀY!"
+      "ĐỤ MÁ MÀY NGU NHƯ BÒ!",
+      "MÀY NGHĨ LÁI XE LÀ TRÒ ĐÙA HẢ?",
+      "AI CŨNG GHÉT MÀY!",
+      "MÀY NGHÈO MÀ CÒN LÁO!",
+      "BỐ MÀY NHÌN MÀY MUỐN ÓI!"
     ];
 
     function randomPos() {
+      const padding = 50; // keep text off edges
       return {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: 24 + Math.random() * 80
+        x: padding + Math.random() * (window.innerWidth - padding*2),
+        y: padding + Math.random() * (window.innerHeight - padding*2),
+        size: Math.max(18, Math.min(48, window.innerWidth / 20 + Math.random() * 30))
       };
     }
 
-    function fireInsult() {
+    function dropInsult() {
       const el = document.createElement('div');
       el.classList.add('insult');
       const { x, y, size } = randomPos();
@@ -77,12 +83,13 @@
       setTimeout(() => el.remove(), 2000);
     }
 
-    setInterval(fireInsult, 500);
+    setInterval(dropInsult, 1000); // Slower for readability
 
+    // Start the fart symphony on click/tap
     window.addEventListener('click', () => {
-      const audio = document.getElementById('yellAudio');
-      audio.play();
+      document.getElementById('appealAudio').play();
     });
   </script>
+
 </body>
 </html>
