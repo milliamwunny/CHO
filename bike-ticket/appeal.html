@@ -68,47 +68,43 @@
       el.textContent = insults[Math.floor(Math.random() * insults.length)];
       document.body.appendChild(el);
 
-      // Pick font size for variety
+      // random font size for chaos
       el.style.fontSize = (24 + Math.random() * 20) + "px";
 
-      // Temporarily show invisibly for measurement
-      el.style.visibility = 'hidden';
-      el.style.left = '0px';
-      el.style.top = '0px';
+      // Delay measurement to next frame to ensure font is rendered
+      requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const textWidth = rect.width;
+        const textHeight = rect.height;
 
-      // Force browser to render so offsetWidth/Height are valid
-      const rect = el.getBoundingClientRect();
-      const textWidth = rect.width;
-      const textHeight = rect.height;
+        // safe position
+        const maxX = window.innerWidth - textWidth - 5;
+        const maxY = window.innerHeight - textHeight - 5;
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
 
-      // Calculate safe positions fully on-screen
-      const maxX = window.innerWidth - textWidth - 10;
-      const maxY = window.innerHeight - textHeight - 10;
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        el.style.visibility = 'visible';
 
-      // Apply final position & show
-      el.style.left = `${x}px`;
-      el.style.top = `${y}px`;
-      el.style.visibility = 'visible';
-
-      setTimeout(() => el.remove(), 4000);
+        setTimeout(() => el.remove(), 4000);
+      });
     }
 
-    // Drop insult every 2s
-    setInterval(dropInsult, 2000);
+    // Drop insult every 2.5 seconds
+    setInterval(dropInsult, 2500);
 
-    // Play sounds on first click/tap
-    function playSounds() {
+    // Play sounds on first tap/click
+    function startChaos() {
       document.getElementById('fart1').play();
       document.getElementById('fart2').play();
       document.getElementById('fart3').play();
-      document.body.removeEventListener('click', playSounds);
-      document.body.removeEventListener('touchstart', playSounds);
+      document.body.removeEventListener('click', startChaos);
+      document.body.removeEventListener('touchstart', startChaos);
     }
 
-    document.body.addEventListener('click', playSounds);
-    document.body.addEventListener('touchstart', playSounds);
+    document.body.addEventListener('click', startChaos);
+    document.body.addEventListener('touchstart', startChaos);
   </script>
 
 </body>
