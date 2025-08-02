@@ -11,10 +11,9 @@
       padding: 0;
       background: black;
       overflow: hidden;
-      cursor: crosshair;
       height: 100%;
-      color: white;
       font-family: 'Courier New', monospace;
+      color: white;
     }
 
     #appealGif {
@@ -25,6 +24,7 @@
       max-width: 90vw;
       max-height: 70vh;
       z-index: 1;
+      display: none;
     }
 
     .insult {
@@ -36,24 +36,46 @@
       animation: pop 0.4s ease-out;
       z-index: 5;
       white-space: nowrap;
-      visibility: hidden; /* start hidden for measurement */
+      visibility: hidden;
     }
 
     @keyframes pop {
       0% { transform: scale(0); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
+
+    #startButton {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      color: red;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      text-align: center;
+      cursor: pointer;
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
 
+  <div id="startButton">🚨 TAP TO SEE YOUR FATE 🚨</div>
   <img id="appealGif" src="troi-oi.gif" alt="Appeal GIF" />
 
-  <audio id="fart1" loop><source src="fart1.mp3" type="audio/mpeg" /></audio>
-  <audio id="fart2" loop><source src="fart2.mp3" type="audio/mpeg" /></audio>
-  <audio id="fart3" loop><source src="fart3.mp3" type="audio/mpeg" /></audio>
+  <audio id="vietMad" loop>
+    <source src="vietnamese-mad.mp3" type="audio/mpeg" />
+  </audio>
 
   <script>
+    const startButton = document.getElementById('startButton');
+    const appealGif = document.getElementById('appealGif');
+    const audio = document.getElementById('vietMad');
+
     const insults = [
       "ĐỤ MÁ MÀY NGU NHƯ BÒ!",
       "MÀY NGHĨ LÁI XE LÀ TRÒ ĐÙA HẢ?",
@@ -68,16 +90,13 @@
       el.textContent = insults[Math.floor(Math.random() * insults.length)];
       document.body.appendChild(el);
 
-      // random font size for chaos
       el.style.fontSize = (24 + Math.random() * 20) + "px";
 
-      // Delay measurement to next frame to ensure font is rendered
       requestAnimationFrame(() => {
         const rect = el.getBoundingClientRect();
         const textWidth = rect.width;
         const textHeight = rect.height;
 
-        // safe position
         const maxX = window.innerWidth - textWidth - 5;
         const maxY = window.innerHeight - textHeight - 5;
         const x = Math.random() * maxX;
@@ -91,20 +110,20 @@
       });
     }
 
-    // Drop insult every 2.5 seconds
-    setInterval(dropInsult, 2500);
-
-    // Play sounds on first tap/click
     function startChaos() {
-      document.getElementById('fart1').play();
-      document.getElementById('fart2').play();
-      document.getElementById('fart3').play();
-      document.body.removeEventListener('click', startChaos);
-      document.body.removeEventListener('touchstart', startChaos);
+      // Start audio
+      audio.play().catch(err => console.log(err));
+
+      // Show GIF
+      appealGif.style.display = "block";
+      startButton.style.display = "none";
+
+      // Start insult spam
+      setInterval(dropInsult, 2500);
     }
 
-    document.body.addEventListener('click', startChaos);
-    document.body.addEventListener('touchstart', startChaos);
+    startButton.addEventListener('click', startChaos);
+    startButton.addEventListener('touchstart', startChaos);
   </script>
 
 </body>
