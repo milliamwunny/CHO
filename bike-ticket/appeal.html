@@ -35,10 +35,8 @@
       text-shadow: 2px 2px black;
       animation: pop 0.4s ease-out;
       z-index: 5;
-      word-wrap: break-word;
-      max-width: 80vw;
-      text-align: center;
       white-space: nowrap;
+      visibility: hidden; /* start hidden for measurement */
     }
 
     @keyframes pop {
@@ -51,9 +49,9 @@
 
   <img id="appealGif" src="troi-oi.gif" alt="Appeal GIF" />
 
-  <audio id="appealAudio" loop>
-    <source src="appeal-fart.mp3" type="audio/mpeg" />
-  </audio>
+  <audio id="fart1" loop><source src="fart1.mp3" type="audio/mpeg" /></audio>
+  <audio id="fart2" loop><source src="fart2.mp3" type="audio/mpeg" /></audio>
+  <audio id="fart3" loop><source src="fart3.mp3" type="audio/mpeg" /></audio>
 
   <script>
     const insults = [
@@ -70,30 +68,47 @@
       el.textContent = insults[Math.floor(Math.random() * insults.length)];
       document.body.appendChild(el);
 
-      // Pick random font size suitable for mobile
-      const size = Math.max(18, Math.min(48, window.innerWidth / 20 + Math.random() * 20));
-      el.style.fontSize = `${size}px`;
+      // Pick font size for variety
+      el.style.fontSize = (24 + Math.random() * 20) + "px";
 
-      // Measure element after it's in DOM
+      // Temporarily show invisibly for measurement
+      el.style.visibility = 'hidden';
+      el.style.left = '0px';
+      el.style.top = '0px';
+
+      // Force browser to render so offsetWidth/Height are valid
       const rect = el.getBoundingClientRect();
-      const maxX = window.innerWidth - rect.width - 10;
-      const maxY = window.innerHeight - rect.height - 10;
+      const textWidth = rect.width;
+      const textHeight = rect.height;
+
+      // Calculate safe positions fully on-screen
+      const maxX = window.innerWidth - textWidth - 10;
+      const maxY = window.innerHeight - textHeight - 10;
       const x = Math.random() * maxX;
       const y = Math.random() * maxY;
 
+      // Apply final position & show
       el.style.left = `${x}px`;
       el.style.top = `${y}px`;
+      el.style.visibility = 'visible';
 
-      setTimeout(() => el.remove(), 3500); // visible longer
+      setTimeout(() => el.remove(), 4000);
     }
 
-    // Slower interval for phones
+    // Drop insult every 2s
     setInterval(dropInsult, 2000);
 
-    // Play sound on first tap for mobile
-    window.addEventListener('click', () => {
-      document.getElementById('appealAudio').play();
-    });
+    // Play sounds on first click/tap
+    function playSounds() {
+      document.getElementById('fart1').play();
+      document.getElementById('fart2').play();
+      document.getElementById('fart3').play();
+      document.body.removeEventListener('click', playSounds);
+      document.body.removeEventListener('touchstart', playSounds);
+    }
+
+    document.body.addEventListener('click', playSounds);
+    document.body.addEventListener('touchstart', playSounds);
   </script>
 
 </body>
